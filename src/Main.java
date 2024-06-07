@@ -1,18 +1,28 @@
 import com.model.Product;
+import com.model.User;
+import com.service.AuthenticationService;
 import com.service.Order;
 import com.util.ProductFileReader;
 import com.view.ShoppingCart;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Product> products = ProductFileReader.readProductsFromFile("src/product.txt");//static method need not to create objects
 
         ShoppingCart cart = new ShoppingCart(products);
+        //User user = new User("Rahat","R123");
+        AuthenticationService authenticationService = new AuthenticationService();
+        authenticationService.register("Rahat","R123");
+        authenticationService.register("Alamin","A123");
+        boolean authentication = authenticationService.login("Alamin","A123");
+        System.out.println("User login"+" "+authentication);
+        authenticationService.viewUser();
 
         while (true) {
             System.out.println("1. View Products");
